@@ -2,7 +2,7 @@ import json
 import random
 import shutil
 import time
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Dict, List
 from urllib.parse import urlparse
 from uuid import uuid4
@@ -89,6 +89,7 @@ class DownloadPhotoMixin:
         fname = urlparse(url).path.rsplit("/", 1)[1]
         filename = "%s.%s" % (filename, fname.rsplit(".", 1)[1]) if filename else fname
         path = Path(folder) / filename
+        path = PurePosixPath(path)
         response = requests.get(url, stream=True)
         response.raise_for_status()
         with open(path, "wb") as f:
