@@ -88,8 +88,7 @@ class DownloadPhotoMixin:
         """
         fname = urlparse(url).path.rsplit("/", 1)[1]
         filename = "%s.%s" % (filename, fname.rsplit(".", 1)[1]) if filename else fname
-        path = Path(folder) / filename
-        path = PurePosixPath(path)
+        path = PurePosixPath(folder,filename)        
         response = requests.get(url, stream=True)
         response.raise_for_status()
         with open(path, "wb") as f:
